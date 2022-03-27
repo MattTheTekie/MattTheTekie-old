@@ -1,0 +1,186 @@
+<html>
+<head>
+<title>The War Room</title>
+<meta name="author" content="Joy of Satan Ministries">
+<meta name="description" content="Satan Tells The Truth.">
+<meta name="keywords" content="Reverse Torah Ritual, Final RTR, Reverse Hebrew, Joy of Satan, Spiritual Warfare">
+<meta name="viewport" content="width=device-width">
+
+<style type="text/css">
+a:link { color: #FF0000; }
+a:visited { color: #C8B560; }
+a:hover { color: #005550; }
+a:active { color: #9e7bff; }
+a { text-decoration: none; }
+table { line-height: 1.5; }
+body {
+	margin: 0;
+	font-family: Verdana,Arial,sans-serif;
+	color: #FFFFFF;
+	scrollbar-arrow-color:#ff0000; 
+	scrollbar-base-color:#000000;
+	scrollbar-shadow-color: #ff0000;  
+	scrollbar-highlight-color: #cc00ff; 
+	scrollbar-track-color: #000000; 
+}
+#clockbox {
+	color: #FF0000;
+	font-size: 17vw;
+	font-family: Arial,sans-serif;
+}
+#clockbox span {
+	display: inline-block;
+	font-size: 1em;
+}
+#clockbox span.colon {
+	vertical-align: top;
+	margin: 0 1vw 0 1vw;
+}
+#clockbox div.name {
+	font-size: 0.35em;
+}
+#hbar {
+	width: 75%;
+	max-width: 400px;
+	margin: 10px 0 10px 0;
+	border-top: 1px solid white;
+}
+.playbtn {
+	width: 60px;
+	height: 60px;
+}
+.topfont {
+	font-family: Verdana,Arial,sans-serif;
+	font-size: 30px;
+}
+.nextfont {
+	font-weight: bold;
+	font-family: Arial,sans-serif;
+	font-size: 6.5vw;
+}
+.font3 {
+	margin: 50px 0 50px 0;
+	font-size: 24px;
+}
+td {
+	font-size: 16px;
+}
+
+/* Phone */
+@media screen and (max-width: 400px) {
+	.playbtn {
+		width: 40px;
+		height: 40px;
+	}
+	td {
+		font-size: 11px;
+	}
+}
+
+/* Tablet */
+@media screen and (max-width: 600px) {
+	.topfont {
+		font-size: 5.5vw;
+	}
+	.font3 {
+		font-size: 4vw;
+		margin: 8vw 0 8vw 0;
+	}
+}
+
+/* Desktop */
+@media screen and (min-width: 1000px) {
+	#clockbox {
+		font-size: 170px;
+	}
+	#clockbox span.colon {
+		vertical-align: top;
+		margin: 0 10px 0 10px;
+	}
+	.nextfont {
+		font-size: 65px;
+	}
+}
+
+</style>
+</head>
+
+<body bgcolor="#000000">
+<center>
+<p class="topfont" >Spiritual War Room</p>
+<div id="hbar"></div>
+
+<p class="nextfont">Next Final RTR Offensive In:</p>
+<noscript><font class="font3">[Requires JavaScript]<br><br></font></noscript>
+<div id="clockbox"><span id="hour"><div id="hbox" class="time"></div><div class="name">HOURS</div></span><span class="colon">:</span><span id="minutes"><div id="mbox" class="time"></div><div class="name">MINUTES</div></span><span class="colon">:</span><span id="seconds"><div id="sbox" class="time"></div><div class="name">SECONDS</div></span></div>
+
+<p class="font3">Choose Your RTR Tool of Choice:</p>
+
+<table cellpadding="10">
+<tbody>
+<tr>
+<td valign="center">
+	<center>
+		<a href="paintable.html">
+			<div class="playbtn">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+					<circle cx="5" cy="5" r="4" fill="#171717" stroke="#FFFFFF" stroke-width="0.3"></circle>
+					<polygon points="3.5,2.85 7.25,5, 3.5,7.15" fill="#FFFFFF"></polygon>
+				</svg>
+			</div>
+			Final RTR <br>Paintable [Light]
+		</a>
+	</center>
+</td>
+<td valign="center">
+	<center>
+		<a href="tpaintable.html">
+			<div class="playbtn">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+					<circle cx="5" cy="5" r="4" fill="#171717" stroke="#FFFFFF" stroke-width="0.3"></circle>
+					<polygon points="3.5,2.85 7.25,5, 3.5,7.15" fill="#FFFFFF"></polygon>
+				</svg>
+			</div>
+			Final RTR + <br>Tetragrammaton RTR <br>Paintable [Light]
+		</a>
+	</center>
+</td> 
+<td valign="center">
+	<center>
+		<a href="tpaintableb.html">
+			<div class="playbtn">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+					<circle cx="5" cy="5" r="4" fill="#171717" stroke="#FFFFFF" stroke-width="0.3"></circle>
+					<polygon points="3.5,2.85 7.25,5, 3.5,7.15" fill="#FFFFFF"></polygon>
+				</svg>
+			</div>
+			Final RTR + <br>Tetragrammaton RTR <br>Paintable [Dark]
+		</a>
+	</center>
+</td>
+</tr>
+</tbody>
+</table>
+<br><br><br><br><br><br><br><br>
+</center>
+
+<script>
+function pad00(s) {
+	s = "" + s;
+	while (s.length < 2) s = '0' + s;
+	return s;
+}
+
+setInterval(function() {
+	var t = new Date();
+	var h = t.getUTCHours();
+	var m = t.getUTCMinutes();
+	var s = t.getUTCSeconds();
+	
+	hbox.innerText = pad00(Math.ceil(h/2)*2 - h);
+	mbox.innerText = pad00(59-m);
+	sbox.innerText = pad00(59-s);
+}, 100);
+</script>
+</body>
+</html>
