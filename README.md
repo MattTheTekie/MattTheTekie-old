@@ -12,4 +12,4 @@ I love playing around with the terminal, sometimes scripting away, devouring Lin
 - 😄 Pronouns: he/him.
 - ⚡ Fun fact: I'm stubborn (whoops !).
 
-https://astafathersatan666.github.io/AstaFatherSatan666/www.angelfire.com/empire/serpentis666/HOME.html
+https://astafathersatan.github.io/AstaFatherSatan/www.angelfire.com/empire/serpentis666/HOME.html
