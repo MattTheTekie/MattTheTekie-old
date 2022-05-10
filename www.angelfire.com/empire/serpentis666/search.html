@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name='viewport' content='width=600'>
+<title>Search Joy of Satan</title>
+<style>
+body {background: black; margin: 0; font-family: Verdana, sans-serif; color: red;}
+a {color: #F00; text-decoration: none;}
+a:hover {color: white;}
+#resultsdiv {margin-left: 120px;}
+#presultnum {font-size: 12px; color: #98AFC7; margin: 10px 0 30px 0;}
+.result {margin: 20px 0 40px 0; width: 80%;}
+.result a {font-family: Verdana, sans-serif; font-size: 20px;}
+.result p {color: #98AFC7; margin: 6px 0 0 0;}
+.result .match {font-size: 12px; color: #98AFC7;}
+#footer {text-align:center;}
+#footer a {padding: 5px;}
+#footer label {font-size: 15px; color: #98AFC7;}
+#searchtb {margin-left: 20px;background: #000;color: red;border: 1px solid #900;vertical-align: middle;border-bottom: 2px solid #900;padding: 3px;font-family: Verdana,sans-serif;font-size: 15px;width: 70%;max-width: 500px;}
+#infobox {color: #98AFC7;}
+.loading {font-size: 24px;}
+</style>
+</head>
+<body>
+<div style='margin: 10px 0 10px 20px;'><img title='Search' onclick="search(searchtb.value);" style='vertical-align: middle;' height='55' src='BluePentagram110.png'><input type='text' title='Search Text' name='query' value="" onkeyup="if (event.keyCode == 13) search(searchtb.value);" id='searchtb'/></div><div style='border: 1px solid #00F; height: 1px; background: #0FF;'></div>
+<div id='resultsdiv'>
+<p id="infobox" class='result loading'>Loading...</p>
+<p id='presultnum'></p>
+<div id="res">
+</div>
+</div>
+<div id='footer'><table style='display: inline-block'><tr><td style='width: 200px; text-align:right;'><a id="alastpage" style="display:none;" href='javascript:void(0)' onclick="addPageOffset(-PAGE_NUM);return false;">&lt; Last Page</a></td><td>&nbsp;<label id="pageidx"></label>&nbsp;</td><td style='width: 200px; text-align:left;'><a id="anextpage" style="display:none;" href='javascript:void(0)' onclick="addPageOffset(PAGE_NUM);return false;">Next Page &gt;</a></td></tr></table><p><a href='HOME.html'><img src='homepage.gif' border='0'></a></p></div>
+
+<script>
+function getquery() {
+	var qix = window.location.href.indexOf("?");
+	if (qix == -1) return "";
+	
+	var qstr = window.location.href.substr(qix+1);
+	
+	var nqstr = "";
+	for (var c = 0; c < qstr.length; c++) {
+		nqstr += qstr[c] == "+" ? " " : qstr[c];
+	}
+	
+	return nqstr;
+}
+
+var query = getquery();
+searchtb.value = query;
+</script>
+
+<script src="jos_search_index.js"></script>
+
+<script>
+var PAGE_NUM = 20;
+
+var ascii_map = [-1,-1,-1,-1,-1,-1,-1,-1,-1,36,36,-1,-1,36,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,36,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,-1,-1,-1,-1,-1,-1,-1,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,-1,-1,-1,-1,-1,-1,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35];
+
+function map_string(str) {
+	str = str.toUpperCase();
+	
+	var nstr = "";
+	for (c = 0; c < str.length; c++) {
+		var ch = str.charCodeAt(c);
+		if (ch >= ascii_map.length || ascii_map[ch] == -1) {
+			nstr += " ";
+		} else {
+			nstr += str[c];
+		}
+	}
+	return nstr;
+}
+
+function getFileName(path) {
+	var slashix = -1;
+	for (c = 0; c < path.length; c++) {
+		if (path[c] == '/' || path[c] == '\\') slashix = c;
+	}
+	if (slashix == -1) return path;
+	return path.substr(slashix+1);
+}
+
+var results;
+var resultnum = 0;
+var page = 0;
+
+function search(stext) {
+	var index = jos_index;
+	
+	results = [];
+	page = 0;
+	resultnum = 0;
+	presultnum.innerHTML = "";
+	
+	if (stext.length < index.window) {
+		infobox.innerHTML = "Search text is too short! It must have at least " + index.window + " characters.";
+		infobox.setAttribute("style", "");
+		showResults();
+		return;
+	}
+	
+	if (stext.length > 256) {
+		infobox.innerHTML = "Search text is too long! It must be less than 256 characters.";
+		infobox.setAttribute("style", "");
+		showResults();
+		return;
+	}
+	
+	var filenum = index.files.length/2;
+	
+	for (var c = 0; c < filenum; c++) {
+		results.push({
+			path: index.files[c*2],
+			title: index.files[c*2+1],
+			score:0
+		});
+	}
+	
+	var piecenum = stext.length - index.window + 1;
+	
+	var mkey = map_string(stext);
+	
+	for (var c = 0; c < piecenum; c++) {
+		var mpiece = mkey.substr(c, index.window);
+		
+		var data = index.table[mpiece];
+		
+		if (data)
+		for (var f = 0; f < data.length; f+=2) {
+			results[data[f]].score += 0x10000 + data[f+1];
+		}
+	}
+	
+	for (var c = 0; c < results.length; c++) {
+		if ((results[c].score >> 16) == piecenum) {
+			var mtitle = map_string(results[c].title);
+			
+			if (mtitle.indexOf(mkey) != -1) {
+				results[c].score += 0x10000;
+			}
+		}
+	}
+	
+	results.sort(function(r1, r2) {return r2.score - r1.score;});
+	
+	for (var c = 0; c < results.length; c++) {
+		if (results[c].score == 0) break;
+		resultnum++;
+		
+		var score = results[c].score >> 16;
+		
+		if (score > piecenum) {
+			score = 100;
+		} else if (score == piecenum) {
+			score = 99;
+		} else
+			score = score * 100 / piecenum;
+		
+		results[c].score = score;
+	}
+	presultnum.innerHTML = resultnum + " Result" + (resultnum != 1 ? "s" : "");
+	infobox.setAttribute("style", "display:none;");
+	
+	showResults();
+}
+
+function showResults() {
+	res.innerHTML = "";
+	for (var c = page; c < resultnum && c-page < PAGE_NUM; c++) {
+		var title = results[c].title;
+		if (title == "") title = getFileName(results[c].path);
+		res.innerHTML += "<div class='result'><a href='../../../" + results[c].path + "'>" + title + "</a><p class='match'>" + results[c].score + "% Match</p><p>" + results[c].path + "</p></div>";
+	}
+	pageidx.innerHTML = "Page " + ((page / PAGE_NUM)+1);
+	alastpage.setAttribute("style", page == 0 ? "display:none;" : "");
+	anextpage.setAttribute("style", page+PAGE_NUM >= resultnum ? "display:none;" : "");
+	
+	window.scrollTo(0,0);
+}
+
+function addPageOffset(offset) {
+	if (page + offset >= resultnum) return;
+	page += offset;
+	if (page < 0) page = 0;
+	
+	showResults();
+}
+
+infobox.className = "result";
+infobox.innerHTML = "Enter text in the box above, then press Enter (or click the blue pentagram) to search for it.";
+
+if (query.length > 0) search(query);
+</script>
+
+</body>
+</html>
