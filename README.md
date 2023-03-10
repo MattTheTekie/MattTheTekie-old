@@ -12,4 +12,4 @@ I love playing around with the terminal, sometimes scripting away, devouring Lin
 - 😄 Pronouns: he/him.
 - ⚡ Fun fact: I'm stubborn (whoops !).
 
-https://MattTheTekie.github.io/MattTheTekie/MattTheTekie-old/www.angelfire.com/empire/serpentis666/HOME.html
+https://mattthetekie.github.io/MattTheTekie-old/www.angelfire.com/empire/serpentis666/HOME.html
