@@ -1,5 +1,5 @@
 ## Old profile repo. 
-Abandoned overtime.
+Abandoned overtime, only available for archival purposes. 🤷
 
 ### You found me, congratulations !
 
